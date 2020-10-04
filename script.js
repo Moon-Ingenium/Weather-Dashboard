@@ -6,7 +6,7 @@ var searchText ="";
 // push new city into array
 // display city in list
 // local storage
-var btn = $(".btn");
+var btn = $(".search-btn");
 var cities = [];
 
 function displaySearchCity() {
@@ -27,7 +27,7 @@ btn.on("click", function (event) {
     for (var i = 0; i < cities.length; i++) {
         var currentCity = cities[i];
         var cityListBtn = $("<button>").text(currentCity);
-        cityListBtn.addClass("displayCityBtn");
+        cityListBtn.addClass("btn btn-lg btn-block btn-outline-dark");
         displayEl.append(cityListBtn);
         localStorage.setItem("cities", cities);
 
