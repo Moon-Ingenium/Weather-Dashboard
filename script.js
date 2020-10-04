@@ -1,6 +1,6 @@
 var searchInput = $("#search-text");
 var displayEl = $(".search-list");
-var searchText ="";
+var searchText = "";
 // enter a search
 // build an array of citys
 // push new city into array
@@ -15,14 +15,23 @@ function displaySearchCity() {
     cities.push(searchText);
 }
 // on click event to get city 
-
+function getUvIndex (lat, lon){
+    var queryUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat +"&lon=" + lon + "&appid=36edb26270cfd8ba7f33ada2c6f55cab";
+    $.ajax({
+        url: queryUrl,
+        method: "GET"
+    }).then(function (response) {
+        $(".uvIndex").text("UV Index: " + response.value);
+        // if uv index scary red if good yellow  
+    });
+}
 btn.on("click", function (event) {
     displayEl.empty();
-    
+
     event.preventDefault();
     displaySearchCity();
-   searchInput.val("");
-    
+    searchInput.val("");
+
 
     for (var i = 0; i < cities.length; i++) {
         var currentCity = cities[i];
@@ -33,31 +42,30 @@ btn.on("click", function (event) {
 
 
     }
+
+    var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + currentCity + "&appid=36edb26270cfd8ba7f33ada2c6f55cab&units=imperial";
+    $.ajax({
+        url: queryUrl,
+        method: "GET"
+    }).then(function (response) {
+        getUvIndex(response.coord.lat,response.coord.lon);
+        var cityDiv = $(".city");
+        cityDiv.text(" Weather Details: " + response.name + response.weather[0].icon);
+        $(".humidity").text("Humidity: " + response.main.humidity + " %");
+        $(".temp").text("Temprature: " + response.main.temp + " ℉");
+        $(".wind").text("Wind Speed: " + response.wind.speed + " MPH");
+        
+        // build a h1, append div, displays city name date and weather icon
+        // build a p, append div displays temp
+
+        // build a p, append div displays wind speed
+
+        // build a p, append div displays uv index
+
+    });
 });
 
 
-
-
-// var city = $(this).attr("data-city");
-var city = "austin";
-var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=36edb26270cfd8ba7f33ada2c6f55cab&units=imperial";
-$.ajax({
-    url: queryUrl,
-    method: "GET"
-}).then(function (response) {
-    var cityDiv = $(".city");
-    cityDiv.text(" Weather Details:" + response.main.name);
-    $(".temp").text("Temprature: " + response.main.temp);
-    $(".wind").text("Wind Speed: " + response.wind.speed);
-    $(".uvIndex").text("UV Index: " + response.main.uvindex);
-    // build a h1, append div, displays city name date and weather icon
-    // build a p, append div displays temp
-
-    // build a p, append div displays wind speed
-
-    // build a p, append div displays uv index
-
-});
 
 
 // var fiveDayQueryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=36edb26270cfd8ba7f33ada2c6f55cab&units=imperial";
