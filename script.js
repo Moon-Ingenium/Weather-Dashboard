@@ -89,7 +89,14 @@ $.ajax({
             fiveDay.push(response.list[i]);
         }
      // display date, weather icon, temp, and humidity per day
-            
+            var day1 = $("<div>");
+            // day1.css("background-color", "blue").text("Temp : " + response.)
+
+            var day2 = $("<div>");
+            var day3 = $("<div>");
+            var day4 = $("<div>");
+            var day5 = $("<div>");
+
     }
 
 
