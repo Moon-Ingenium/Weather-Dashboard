@@ -1,6 +1,7 @@
 var searchInput = $("#search-text");
 var displayEl = $(".search-list");
 var searchText = "";
+var uvEl = $(".uvIndex");
 // enter a search
 // build an array of citys
 // push new city into array
@@ -21,8 +22,20 @@ function getUvIndex (lat, lon){
         url: queryUrl,
         method: "GET"
     }).then(function (response) {
-        $(".uvIndex").text("UV Index: " + response.value);
-        // if uv index scary red if good yellow  
+        uvEl.text("UV Index: " + response.value);
+        // uv mild 
+        if (response.value <= 2){
+            uvEl.css("background-color", "yellow");
+
+        }
+        else if (response.value >=4){
+            // uv moderate
+            uvEl.css("background-color", "orange");
+        }
+        else{
+            // uv severe
+            uvEl.css("background-color", "red");
+        }
     });
 }
 btn.on("click", function (event) {
