@@ -9,6 +9,8 @@ var uvEl = $(".uvIndex");
 // local storage
 var btn = $(".search-btn");
 var cities = [];
+var header = $(".forecast-header");
+var forecastEl = $(".five-day-forecast");
 
 function displaySearchCity() {
 
@@ -16,23 +18,23 @@ function displaySearchCity() {
     cities.push(searchText);
 }
 // on click event to get city 
-function getUvIndex (lat, lon){
-    var queryUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat +"&lon=" + lon + "&appid=36edb26270cfd8ba7f33ada2c6f55cab";
+function getUvIndex(lat, lon) {
+    var queryUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=36edb26270cfd8ba7f33ada2c6f55cab";
     $.ajax({
         url: queryUrl,
         method: "GET"
     }).then(function (response) {
         uvEl.text("UV Index: " + response.value);
         // uv mild 
-        if (response.value <= 2){
+        if (response.value <= 2) {
             uvEl.css("background-color", "yellow");
 
         }
-        else if (response.value >=4){
+        else if (response.value >= 4) {
             // uv moderate
             uvEl.css("background-color", "orange");
         }
-        else{
+        else {
             // uv severe
             uvEl.css("background-color", "red");
         }
@@ -61,45 +63,41 @@ btn.on("click", function (event) {
         url: queryUrl,
         method: "GET"
     }).then(function (response) {
-        getUvIndex(response.coord.lat,response.coord.lon);
+        getUvIndex(response.coord.lat, response.coord.lon);
         var cityDiv = $(".city");
+        // show city, date, and weather icon 
+        // <img src=http://openweathermap.org/img/w/01d.png>
+        var weatherIcon = $("<img>");
         cityDiv.text(" Weather Details: " + response.name + response.weather[0].icon);
         $(".humidity").text("Humidity: " + response.main.humidity + " %");
         $(".temp").text("Temprature: " + response.main.temp + " ℉");
-        $(".wind").text("Wind Speed: " + response.wind.speed + " MPH");
-        
-        // build a h1, append div, displays city name date and weather icon
-        // build a p, append div displays temp
-
-        // build a p, append div displays wind speed
-
-        // build a p, append div displays uv index
+        $(".wind").text("Wind Speed: " + response.wind.speed + " MPH")
 
     });
+
+    var fiveDayQueryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cities + "&appid=36edb26270cfd8ba7f33ada2c6f55cab&units=imperial";
+$.ajax({
+    url: fiveDayQueryUrl,
+    method: "GET"
+}).then(function (response) {
+    //    gets 5 day current weather
+    forecastEl.text(" 5-Day Forecast");
+    var fiveDay = [];
+    console.log(response.list);
+    for (var i = 0; i < response.list.length; i++) {
+        if (i % 8 === 0) {
+            fiveDay.push(response.list[i]);
+        }
+     // display date, weather icon, temp, and humidity per day
+            
+    }
+
+
+    //     //    display weather icon under weather [0].icon
+    //     // img<src=http://openweathermap.org/img/w/01d.png>
+});
 });
 
 
 
 
-// var fiveDayQueryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=36edb26270cfd8ba7f33ada2c6f55cab&units=imperial";
-// $.ajax({
-//     url: fiveDayQueryUrl,
-//     method: "GET"
-// }).then(function (response) {
-//     //    gets 5 day current weather
-//     var forecastEl = $(".five-day-forecast");
-//     forecastEl.text(" 5-Day Forecast" );
-//     var fiveDay = [];
-//     console.log(response.list);
-//     for (var i = 0; i < response.list.length; i++) {
-//         if (i % 8 === 0) {
-//             fiveDay.push(response.list[i]);
-//         }
-//         // create 5 day header
-//         // display date, weather icon, temp, and humidity per day
-//     }
-
-
-//     //    display weather icon under weather [0].icon
-//     // img<src=http://openweathermap.org/img/w/01d.png>
-// });
