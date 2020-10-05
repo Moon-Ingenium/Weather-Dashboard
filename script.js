@@ -76,35 +76,51 @@ btn.on("click", function (event) {
     });
 
     var fiveDayQueryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cities + "&appid=36edb26270cfd8ba7f33ada2c6f55cab&units=imperial";
-$.ajax({
-    url: fiveDayQueryUrl,
-    method: "GET"
-}).then(function (response) {
-    //    gets 5 day current weather
-    forecastEl.text(" 5-Day Forecast");
-    var fiveDay = [];
-    console.log(response.list);
-    for (var i = 0; i < response.list.length; i++) {
-        if (i % 8 === 0) {
-            fiveDay.push(response.list[i]);
+    $.ajax({
+        url: fiveDayQueryUrl,
+        method: "GET"
+    }).then(function (response) {
+        //    gets 5 day current weather
+        forecastEl.text(" 5-Day Forecast");
+        var fiveDay = [];
+        var current = {};
+        for (var i = 0; i < response.list.length; i++) {
+            if (i % 8 === 0) {
+                current = response.list[i];
+                var date = $("<div>");
+                // day1.css("background-color", "blue").text("Temp : " + response.)
+
+                var temp = $("<div>");
+                var icon = $("<div>");
+                var humidity = $("<div>");
+                var forecastDay = $("<div class = 'col'>");
+                var card = $("<div class = 'card bg-primary text-white'>");
+                var body = $("<div class ='card-body'>");
+                $("#forecast").append(forecastDay);
+                forecastDay.append(card);
+                card.append(body);
+
+console.log(current);
+                body.append(date);
+                body.append(temp);
+                temp.text(current.main.temp + " ℉");
+                body.append(icon);
+                body.append(humidity);
+                humidity.text(current.main.humidity + "%");
+                date.text(current.dt_txt);
+
+            }
+
+            
         }
-     // display date, weather icon, temp, and humidity per day
-            var day1 = $("<div>");
-            // day1.css("background-color", "blue").text("Temp : " + response.)
 
-            var day2 = $("<div>");
-            var day3 = $("<div>");
-            var day4 = $("<div>");
-            var day5 = $("<div>");
-
-    }
-
-
-    //     //    display weather icon under weather [0].icon
-    //     // img<src=http://openweathermap.org/img/w/01d.png>
+    console.log(fiveDay);
+                
+            //     //    display weather icon under weather [0].icon
+        //     // img<src=http://openweathermap.org/img/w/01d.png>
+    });
 });
-});
-
-
+        
+    
 
 
