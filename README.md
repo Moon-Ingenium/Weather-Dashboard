@@ -11,4 +11,4 @@
 ![weather dashboard demo](./Assets/Weather-Dashboard.gif)
 
 
-    GitHub: https://github.com/Moon-Ingenium/Work-Day-Scheduler.git
+    GitHub: https://github.com/Moon-Ingenium/Weather-Dashboard.git
