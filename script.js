@@ -2,11 +2,7 @@ var searchInput = $("#search-text");
 var displayEl = $(".search-list");
 var searchText = "";
 var uvEl = $(".uvIndex");
-// enter a search
-// build an array of citys
-// push new city into array
-// display city in list
-// local storage
+
 var btn = $(".search-btn");
 var cities = [];
 var header = $(".forecast-header");
@@ -119,13 +115,7 @@ function cityHistoryDisplay(newCity) {
             }
 
         };
-        // $(".city-button").on("click", function (event) {
-        //     forecastRow.empty();
-        //     event.preventDefault();
-        //     cityHistoryDisplay($(event.target).text());
-            
-
-        // })
+       
 
     });
 }
