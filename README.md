@@ -12,3 +12,4 @@
 
 
     GitHub: https://github.com/Moon-Ingenium/Weather-Dashboard.git
+    Deployed link: https://moon-ingenium.github.io/Weather-Dashboard/
